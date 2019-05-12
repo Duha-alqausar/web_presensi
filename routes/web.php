@@ -16,9 +16,9 @@ Route::get('/', function () {
 });
 
 
-Route::get('/home/keluar/{id}','homeController@keluar');
+Route::get('/home/keluar/{id}','HomeController@keluar');
 
-Route::post('/home/absen','homeController@absen')->name('absen');
+Route::post('/home/absen','HomeController@absen')->name('absen');
 
 
 Auth::routes();
