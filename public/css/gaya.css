@@ -1,0 +1,77 @@
+/* INPUT ABSEN */
+.bg-form-absen {
+    width: 85%;
+    height: 120px;
+    border-radius: 15px;
+    background-color: #000;
+    
+}
+
+.bg-form-absen h4 {
+    
+    color: white;
+}
+
+/* DAFTAR TABLE */
+.daftar-tabel {
+    border-radius: 10px; 
+    color: white;
+    background-color: #000;
+}
+
+/* TABLE ABSEN */
+.table {
+
+    width: 99.5%;
+    border-radius: 10px !important;
+}
+
+.waktu .btn-light { 
+    padding: 1px;
+}
+
+
+
+
+
+
+
+
+@media (max-width: 576px) {
+    .bg-form-absen {
+        width: 95%;
+        height: 150px;
+    }
+
+    .absen .btn-secondary {
+        width: 100%;
+    }
+
+    .daftar-tabel {
+        width: 96%;
+    }
+
+    .waktu {
+        padding-left: 72%; 
+        position: absolute;
+    }
+}   
+
+
+@media (min-width: 992px) {
+    .bg-form-absen {
+        width: 82%;
+    }
+    .daftar-tabel {
+        width: 82.2%;
+    }
+
+    .waktu {
+        position: absolute;
+        margin-left: 75%;
+    }
+
+    .daftar-tabel h5 {
+    }
+    
+}
