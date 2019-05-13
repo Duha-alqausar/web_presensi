@@ -56,10 +56,8 @@ class HomeController extends Controller
     public function absen(Request $request)
     {
         if (Auth::user()->nip = $request['nip']) {
-            echo "oke";
-            die;
-        }
-        $status = DB::table('users')->where('nip', $request['nip'])->count();
+            
+             $status = DB::table('users')->where('nip', $request['nip'])->count();
      if ($status > 0) {
         $pegawai = DB::table('users')->where('nip', $request['nip'])->get();
          $idPeg = json_decode(json_encode($pegawai) , true)[0]['id'];
@@ -88,6 +86,8 @@ class HomeController extends Controller
             return redirect('/home')->with('status', "$nama, Anda sudah tidak datang lebih dari 3 hari, Harap Hubungi HRD..!!");
         }
 
+        }
+       
          
         
 
