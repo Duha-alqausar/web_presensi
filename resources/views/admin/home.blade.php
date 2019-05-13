@@ -98,7 +98,11 @@
             <td>{{ $p->jam_masuk }}</td>
             <td>{{ $p->jam_keluar }}</td>
             <td>{{ $p->keterangan }}</td>
-            <td><a href="/home/keluar/{{ $p->id_absensi }}" class="btn btn-danger">Keluar</a></td>
+            <td><a href="/home/keluar/{{ $p->id_absensi }}" class="btn btn-danger
+                @if( Auth::user()->name != $p->name )
+                    disabled
+                @endif
+                ">Keluar</a></td>
 
         </td>
 
