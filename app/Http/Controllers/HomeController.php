@@ -96,7 +96,7 @@ class HomeController extends Controller
 
 
 }else{
-   return redirect('/home')->with('status', "Anda Tidak Dikenali");
+   return redirect('/home')->with('status', "Kode Unik anda tidak cocok..!!");
 }
 
 date_default_timezone_set("Asia/Jakarta");
