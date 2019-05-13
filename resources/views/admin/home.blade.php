@@ -102,6 +102,10 @@
                 @if( Auth::user()->name != $p->name )
                     disabled
                 @endif
+                <?php date_default_timezone_set("Asia/Jakarta"); ?>
+                @if( $p->tanggal_absen == date ('Y-m-d') )
+                    disabled
+                @endif
                 ">Keluar</a></td>
 
         </td>
