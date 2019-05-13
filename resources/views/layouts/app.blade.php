@@ -40,7 +40,8 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
-                   
+                    @guest
+                    
 
                     @else
                     <li class="nav-item dropdown">
