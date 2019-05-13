@@ -99,14 +99,15 @@
             <td>{{ $p->jam_masuk }}</td>
             <td>{{ $p->jam_keluar }}</td>
             <td>{{ $p->keterangan }}</td>
-            <td><a href="/home/keluar/{{ $p->id_absensi }}" class="btn btn-danger
+           <td><a href="/home/keluar/{{ $p->id_absensi }}" class="btn btn-danger
                 @if( Auth::user()->name != $p->name )
                     disabled
                 @endif
                 <?php date_default_timezone_set("Asia/Jakarta"); ?>
-                @if( $p->tanggal_absen == date ('Y-m-d') )
+                <?php if ($p->tanggal_absen == date ('Y-m-d')): ?>
                     disabled
-                @endif
+                    
+                <?php endif ?>
                 ">Keluar</a></td>
 
         </td>

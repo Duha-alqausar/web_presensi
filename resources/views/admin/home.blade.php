@@ -103,9 +103,10 @@
                     disabled
                 @endif
                 <?php date_default_timezone_set("Asia/Jakarta"); ?>
-                @if( $p->tanggal_absen == date ('Y-m-d') )
+                <?php if ($p->tanggal_absen == date ('Y-m-d')): ?>
                     disabled
-                @endif
+                    
+                <?php endif ?>
                 ">Keluar</a></td>
 
         </td>
