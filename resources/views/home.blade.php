@@ -58,7 +58,7 @@
                
 
 
-   <div class="container daftar-tabel mt-4">
+   <div class="container daftar-tabel mt-3">
             <div class="row">
                 <div class="col-sm-10">
                     <h5 class="mt-2">Daftar Absen</h5>
@@ -72,7 +72,7 @@
             </div>
         </div>
 
-    <div class="container-fluid ml-1">
+    <div class="ml-1">
             <div class="container table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead class="thead-light">

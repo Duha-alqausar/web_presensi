@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -54,6 +55,10 @@ class HomeController extends Controller
 
     public function absen(Request $request)
     {
+        if (Auth::user()->nip = $request['nip']) {
+            echo "oke";
+            die;
+        }
         $status = DB::table('users')->where('nip', $request['nip'])->count();
      if ($status > 0) {
         $pegawai = DB::table('users')->where('nip', $request['nip'])->get();
