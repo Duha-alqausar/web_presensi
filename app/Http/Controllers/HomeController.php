@@ -55,70 +55,70 @@ class HomeController extends Controller
 
     public function absen(Request $request)
     {
-        if (Auth::user()->nip = $request['nip']) {
-            
-             $status = DB::table('users')->where('nip', $request['nip'])->count();
-     if ($status > 0) {
-        $pegawai = DB::table('users')->where('nip', $request['nip'])->get();
-         $idPeg = json_decode(json_encode($pegawai) , true)[0]['id'];
+        if (Auth::user()->nip == $request['nip']) {
 
-         $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->count();
+           $status = DB::table('users')->where('nip', $request['nip'])->count();
+           if ($status > 0) {
+            $pegawai = DB::table('users')->where('nip', $request['nip'])->get();
+            $idPeg = json_decode(json_encode($pegawai) , true)[0]['id'];
 
-        if ($query > 0) {
-             $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->get();
+            $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->count();
 
-            $ket =  json_decode(json_encode($query) , true)[0]['tanggal_absen'];
-             $tanggal = explode('-', $ket);
-            
-         $tanggal = mktime(0,0,0, $tanggal[1], $tanggal[2], $tanggal[0]);
-         $now = time();
-         if (($tanggal+259200) < $now) {
-            $nama = json_decode(json_encode($pegawai) , true)[0]['name'];
-            date_default_timezone_set("Asia/Jakarta");
-            $date = date ('Y-m-d');
-            $jam = date ('H:i:s');
-            $q = DB::table('absensi')->insert([
-                'id_pegawai' => $idPeg,
-                'tanggal_absen' => $date,
-                'jam_masuk' => $jam,
-                'keterangan' => "Hadir"
-            ]);
-            return redirect('/home')->with('status', "$nama, Anda sudah tidak datang lebih dari 3 hari, Harap Hubungi HRD..!!");
+            if ($query > 0) {
+               $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->get();
+
+               $ket =  json_decode(json_encode($query) , true)[0]['tanggal_absen'];
+               $tanggal = explode('-', $ket);
+
+               $tanggal = mktime(0,0,0, $tanggal[1], $tanggal[2], $tanggal[0]);
+               $now = time();
+               if (($tanggal+259200) < $now) {
+                $nama = json_decode(json_encode($pegawai) , true)[0]['name'];
+                date_default_timezone_set("Asia/Jakarta");
+                $date = date ('Y-m-d');
+                $jam = date ('H:i:s');
+                $q = DB::table('absensi')->insert([
+                    'id_pegawai' => $idPeg,
+                    'tanggal_absen' => $date,
+                    'jam_masuk' => $jam,
+                    'keterangan' => "Hadir"
+                ]);
+                return redirect('/home')->with('status', "$nama, Anda sudah tidak datang lebih dari 3 hari, Harap Hubungi HRD..!!");
+            }
+
         }
 
-        }
-       
-         
+
         
 
-         
-        }
 
-
-    }else{
-         return redirect('/home')->with('status', "Anda Tidak Dikenali");
     }
 
-    date_default_timezone_set("Asia/Jakarta");
-    $date = date ('Y-m-d');
-    $jam = date ('H:i:s');
 
-    $q = DB::table('absensi')->where('id_pegawai', $idPeg)
-    ->Where('tanggal_absen', $date)->count();
+}else{
+   return redirect('/home')->with('status', "Anda Tidak Dikenali");
+}
 
-    if ($q > 0) {
-        echo "<script>alert('Anda Sudah Absen Hari Ini')</script>";
-        echo "<script>location='/home';</script>";exit;
-    }
+date_default_timezone_set("Asia/Jakarta");
+$date = date ('Y-m-d');
+$jam = date ('H:i:s');
 
-    $q = DB::table('absensi')->insert([
-        'id_pegawai' => $idPeg,
-        'tanggal_absen' => $date,
-        'jam_masuk' => $jam,
-        'keterangan' => "Hadir"
-    ]);
+$q = DB::table('absensi')->where('id_pegawai', $idPeg)
+->Where('tanggal_absen', $date)->count();
 
-    echo "<script>alert('Kamu Berhasil Absen Di jam $jam')</script>";
-    echo "<script>location='/home';</script>";
+if ($q > 0) {
+    echo "<script>alert('Anda Sudah Absen Hari Ini')</script>";
+    echo "<script>location='/home';</script>";exit;
+}
+
+$q = DB::table('absensi')->insert([
+    'id_pegawai' => $idPeg,
+    'tanggal_absen' => $date,
+    'jam_masuk' => $jam,
+    'keterangan' => "Hadir"
+]);
+
+echo "<script>alert('Kamu Berhasil Absen Di jam $jam')</script>";
+echo "<script>location='/home';</script>";
 }
 }
