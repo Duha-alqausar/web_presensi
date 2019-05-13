@@ -101,12 +101,9 @@
             <td><a href="/home/keluar/{{ $p->id_absensi }}" class="btn btn-danger
                 @if( Auth::user()->name != $p->name )
                     disabled
-                @endif
-                <?php date_default_timezone_set("Asia/Jakarta"); ?>
-                <?php if ($p->tanggal_absen == date ('Y-m-d')): ?>
+                @elseif( $p->tanggal_absen == date ('Y-m-d') )
                     disabled
-                    
-                <?php endif ?>
+                @endif
                 ">Keluar</a></td>
 
         </td>
