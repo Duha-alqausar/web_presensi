@@ -41,12 +41,12 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
     <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+        <a href="{{ url('/admin') }}" class="simple-text logo-mini">
           <div class="logo-image-small">
-            <img src="{{asset('css/assets/img/logo-small.png')}}">
+            <img src="{{asset('upload_gambar/im.png')}}">
         </div>
     </a>
-    <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+    <a href="{{ url('/admin') }}" class="simple-text logo-normal">
       Sistem Presensi
           <!-- <div class="logo-image-big">
             <img src="css/assets/img/logo-big.png">
@@ -59,18 +59,18 @@
     <ul class="nav">
 
         <li>
-        <a href="{{ url('/admin') }}">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
+            <a href="{{ url('/admin') }}">
+              <i class="nc-icon nc-bank"></i>
+              <p>Dashboard</p>
+          </a>
+      </li>
+      <li>
+        <a href="/home">
+          <i class="nc-icon nc-tile-56"></i>
+          <p>Presensi</p>
       </a>
   </li>
   <li>
-    <a href="/home">
-      <i class="nc-icon nc-tile-56"></i>
-      <p>Presensi</p>
-  </a>
-</li>
-<li>
     <a href="/home/permohonan">
       <i class="nc-icon nc-bell-55"></i>
       <p>Permohonan</p>

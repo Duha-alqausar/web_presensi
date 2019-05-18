@@ -13,23 +13,24 @@
                         @csrf
 
                         <div class="card shadow-lg">
+
                           <div class="card-body">
                             <div class="form-group">
-                             <label>E-Mail Address</label>
-                             <input type="text" name="email" class="form-control" placeholder="Email">
-                         </div>
-                         <div class="form-group">
-                             <label>Password</label>
-                             <input type="password" name="password" class="form-control" placeholder="Password">
-                         </div>
-                         <button type="submit" class="btn btn-black col-12">Login</button>
+                               <label>E-Mail Address</label>
+                               <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="E-mail">
+                           </div>
+                           <div class="form-group">
+                               <label>Password</label>
+                               <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
+                           </div>
+                           <button type="submit" class="btn btn-black col-12">Login</button>
 
-                     </form>
-                 </div>
+                       </form>
+                   </div>
 
-             </div>
-         </div>
+               </div>
+           </div>
 
-     </div>
- </div>
- @endsection
+       </div>
+   </div>
+   @endsection

@@ -5,38 +5,38 @@
   <div class="row">
     <div class="container">
 
-          
-             <div class="card">
-            <div class="card-header">
-               <div class="row">
-            <div class="form-group col-md-9 right">
-              <h4 class="card-title"> Data Permohonan</h4>
-            </div>
-            <div class="input-group col-md-3">
+      
+     <div class="card">
+      <div class="card-header">
+       <div class="row">
+        <div class="form-group col-md-9 right">
+          <h4 class="card-title"> Data Permohonan</h4>
+        </div>
+        <div class="input-group col-md-3">
 
-              <form action="/admin/cari_p" method="GET">
-                <div class="input-group">
-                  <input type="text" value="" name="cari" class="form-control" placeholder="Cari...">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <i class="nc-icon nc-zoom-split"></i>
-                    </div>
-                  </form>
+          <form action="/admin/cari_p" method="GET">
+            <div class="input-group">
+              <input type="text" value="" name="cari" class="form-control" placeholder="Cari...">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <i class="nc-icon nc-zoom-split"></i>
                 </div>
-              </div></form></div></div>
+              </form>
+            </div>
+          </div></form></div></div>
+          <div class="card-body">
+
+
+            @if (session('status'))
+            <div class="alert alert-warning" role="alert">
+              {{ session('status') }}
+            </div>
+            @endif
+
             <div class="card-body">
-
-
-              @if (session('status'))
-              <div class="alert alert-warning" role="alert">
-                {{ session('status') }}
-              </div>
-              @endif
-
-             <div class="card-body">
-   <div class="table-responsive-lg">
-    <table class="table">
-        <thead class="text-primary">
+             <div class="table-responsive-lg">
+              <table class="table">
+                <thead class="text-primary">
                   <tr>
                     <th>No.</th>
                     <th >Nama</th>
@@ -59,34 +59,34 @@
                     <td>{{$p->waktu}}</td>
                     <td> @if( $p->status == "Confirm" )
                       <font color="green"><b>{{$p->status}}</b></font>
-                        @elseif( $p->status == "Reject" )
-                        <font color="red"><b>{{$p->status}}</b></font>
-                        @endif</td>
-                        <td>{{$p->keterangan}}</td>
-                        <td>{{$p->perihal}}</td>
-                        @if( $p->file_gambar)
-                        <td><a href="{{ url('/upload_gambar/'.$p->file_gambar) }}">Lihat Bukti</a></td>
-                        @else
-                        <td></td>
-                        @endif
-                      </td>
+                      @elseif( $p->status == "Reject" )
+                      <font color="red"><b>{{$p->status}}</b></font>
+                    @endif</td>
+                    <td>{{$p->keterangan}}</td>
+                    <td>{{$p->perihal}}</td>
+                    @if( $p->file_gambar)
+                    <td><a href="{{ url('/upload_gambar/'.$p->file_gambar) }}">Lihat Bukti</a></td>
+                    @else
+                    <td></td>
+                    @endif
+                  </td>
 
 
-                      <td class="mx-1 px-1">
-                        <a href="/admin/konfirmasi/{{ $p->id }}" class="btn btn-sm btn-success">Konfirmasi</a></td>
-                        <td class="mx-1 px-0">
-                          <a href="/admin/batal/{{ $p->id }}" class="btn btn-sm btn-danger">Tolak</a>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                     </div>
-                  </table>
-          <b>Hal : {{ $permohonan->currentPage() }} dari {{$permohonan->lastPage()}}</b>
-          <div class="float-right">{{ $permohonan->links() }}</div>
-                </div>
+                  <td class="mx-1 px-1">
+                    <a href="/admin/konfirmasi/{{ $p->id }}" class="btn btn-sm btn-success">Konfirmasi</a></td>
+                    <td class="mx-1 px-0">
+                      <a href="/admin/batal/{{ $p->id }}" class="btn btn-sm btn-danger">Tolak</a>
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
               </div>
-            </div>
-          </div> 
+            </table>
+            <b>Hal : {{ $permohonan->currentPage() }} dari {{$permohonan->lastPage()}}</b>
+            <div class="float-right">{{ $permohonan->links() }}</div>
+          </div>
         </div>
-        @endsection
+      </div>
+    </div> 
+  </div>
+  @endsection

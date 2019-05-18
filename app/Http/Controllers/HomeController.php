@@ -32,13 +32,13 @@ class HomeController extends Controller
 
         $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->count();
         if ($query > 0) {
-           $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->get();
-           $ket =  json_decode(json_encode($query) , true)[0]['tanggal_absen'];
-           $tanggal = explode('-', $ket);
+         $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->get();
+         $ket =  json_decode(json_encode($query) , true)[0]['tanggal_absen'];
+         $tanggal = explode('-', $ket);
 
-           $tanggal = mktime(0,0,0, $tanggal[1], $tanggal[2], $tanggal[0]);
-           $now = time();
-           if (($tanggal+259200) < $now) {
+         $tanggal = mktime(0,0,0, $tanggal[1], $tanggal[2], $tanggal[0]);
+         $now = time();
+         if (($tanggal+259200) < $now) {
             $nama = Auth::user()->name;
             date_default_timezone_set("Asia/Jakarta");
 
@@ -150,22 +150,22 @@ class HomeController extends Controller
 
         if (Auth::user()->nip == $request['nip']) {
 
-         $status = DB::table('users')->where('nip', $request['nip'])->count();
-         if ($status > 0) {
+           $status = DB::table('users')->where('nip', $request['nip'])->count();
+           if ($status > 0) {
             $pegawai = DB::table('users')->where('nip', $request['nip'])->get();
             $idPeg = json_decode(json_encode($pegawai) , true)[0]['id'];
 
             $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->count();
 
             if ($query > 0) {
-             $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->get();
+               $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->get();
 
-             $ket =  json_decode(json_encode($query) , true)[0]['tanggal_absen'];
-             $tanggal = explode('-', $ket);
+               $ket =  json_decode(json_encode($query) , true)[0]['tanggal_absen'];
+               $tanggal = explode('-', $ket);
 
-             $tanggal = mktime(0,0,0, $tanggal[1], $tanggal[2], $tanggal[0]);
-             $now = time();
-             if (($tanggal+259200) < $now) {
+               $tanggal = mktime(0,0,0, $tanggal[1], $tanggal[2], $tanggal[0]);
+               $now = time();
+               if (($tanggal+259200) < $now) {
                 $nama = json_decode(json_encode($pegawai) , true)[0]['name'];
                 date_default_timezone_set("Asia/Jakarta");
                 $date = date ('Y-m-d');
@@ -190,7 +190,7 @@ class HomeController extends Controller
 
 
 }else{
- return redirect('/home')->with('status', "Kode Unik anda tidak cocok..!!");
+   return redirect('/home')->with('status', "Kode Unik anda tidak cocok..!!");
 }
 
 date_default_timezone_set("Asia/Jakarta");

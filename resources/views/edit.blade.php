@@ -4,13 +4,13 @@
 	<title></title>
 </head>
 <body>
-<h3>Edit Pegawai</h3>
- 
+	<h3>Edit Pegawai</h3>
+	
 	<a href="/pegawai"> Kembali</a>
 	
 	<br/>
 	<br/>
- 
+	
 	@foreach($pegawai as $p)
 	<form action="/pegawai/update" method="post">
 		{{ csrf_field() }}

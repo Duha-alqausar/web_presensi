@@ -106,37 +106,37 @@ class AdminController extends Controller
 
     public function konfirmasi($id)
     {
-     DB::table('permohonan')->where('id',$id)->update([
+       DB::table('permohonan')->where('id',$id)->update([
         'status' => "Confirm"]);
-     $nama1 = DB::table('permohonan')->where('id',$id)->get();
-     $nama = json_decode(json_encode($nama1) , true)[0];
+       $nama1 = DB::table('permohonan')->where('id',$id)->get();
+       $nama = json_decode(json_encode($nama1) , true)[0];
 
-     $absensi = DB::table('users')
-     ->where('name',$nama['nama'])
-     ->get();
-     $absensi1= json_decode(json_encode($absensi) , true)[0]['id'];
+       $absensi = DB::table('users')
+       ->where('name',$nama['nama'])
+       ->get();
+       $absensi1= json_decode(json_encode($absensi) , true)[0]['id'];
 
 
-$date = date ('Y-m-d');
-$q = DB::table('absensi')->where('id_pegawai', $absensi1)
-->Where('tanggal_absen', $date)->count();
+       $date = date ('Y-m-d');
+       $q = DB::table('absensi')->where('id_pegawai', $absensi1)
+       ->Where('tanggal_absen', $date)->count();
 
-if ($q > 0) {
-    echo "<script>alert('Anda Sudah Absen Hari Ini')</script>";
-    echo "<script>location='/admin/permohonan';</script>";exit;
-}
+       if ($q > 0) {
+        echo "<script>alert('Anda Sudah Absen Hari Ini')</script>";
+        echo "<script>location='/admin/permohonan';</script>";exit;
+    }
 
-     $q = DB::table('absensi')->insert([
+    $q = DB::table('absensi')->insert([
         'id_pegawai' => $absensi1,
         'tanggal_absen' => $nama['tanggal'],
         'keterangan' => $nama['keterangan']
     ]);
     // alihkan halaman ke halaman pegawai
-     return redirect('/admin/permohonan')->with('status', "Permohonan berhasil Di konfirmasi");
- }
+    return redirect('/admin/permohonan')->with('status', "Permohonan berhasil Di konfirmasi");
+}
 
- public function batal($id)
- {
+public function batal($id)
+{
 
     DB::table('permohonan')->where('id',$id)->update([
         'status' => "Reject"]);
@@ -235,7 +235,7 @@ public function hapus_p($id)
             'tanggal_absen' => $request->tanggal_absen,
             'jam_masuk' => $request->jam_masuk,
             'jam_keluar' => $request->jam_keluar,
-           ]);
+        ]);
     // alihkan halaman ke halaman pegawai
         return redirect('/admin/home');
     }
