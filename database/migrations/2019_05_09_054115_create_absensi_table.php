@@ -17,7 +17,7 @@ class CreateAbsensiTable extends Migration
             $table->bigIncrements('id_absensi');
             $table->integer('id_pegawai');
             $table->date('tanggal_absen');
-            $table->time('jam_masuk');
+            $table->time('jam_masuk')->nullable();
             $table->string('keterangan',15);
             $table->time('jam_keluar')->nullable();
 

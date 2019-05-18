@@ -26,13 +26,76 @@ class HomeController extends Controller
     public function index()
     {
         $absensi = DB::table('absensi')
-        ->join('users', 'absensi.id_pegawai', '=', 'users.id')
+        ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('name',Auth::user()->name)
         ->get();
+        $idPeg = Auth::user()->id;
+
+        $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->count();
+        if ($query > 0) {
+           $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->get();
+           $ket =  json_decode(json_encode($query) , true)[0]['tanggal_absen'];
+           $tanggal = explode('-', $ket);
+
+           $tanggal = mktime(0,0,0, $tanggal[1], $tanggal[2], $tanggal[0]);
+           $now = time();
+           if (($tanggal+259200) < $now) {
+            $nama = Auth::user()->name;
+            date_default_timezone_set("Asia/Jakarta");
+
+            session()->put('status', "$nama, Anda sudah tidak datang lebih dari 3 hari, Harap Hubungi HRD..!!");
+            return view('home',['absensi' => $absensi]);
+
+        }}
+
 
         // mengirim data absensi ke view index
         return view('home',['absensi' => $absensi]);
 
     }
+
+    public function izin(Request $request)
+    {
+        $q = DB::table('permohonan')->insert([
+            'nama' => $request['name'],
+            'keterangan' => $request['keterangan'],
+            'perihal' => $request['perihal'],
+            'tanggal' => $request['tanggal'],
+            'waktu' => $request['jam'],
+            'status' => 'Proses',
+        ]);
+        if ($q) {
+            $nama = $request['name'];
+            return redirect('/home')->with('status', "$nama, Pengajuan Izin sedang di proses");
+        }
+        return redirect('/home')->with('status', "Maaf Konfirmasi anda gagal");
+    }
+
+
+    public function sakit(Request $request)
+    {
+
+        $file = $request->file('file');
+        $nama_file = time()."_".$file->getClientOriginalName();
+        $tujuan_upload = 'upload_gambar';
+        $file->move($tujuan_upload,$nama_file);
+        
+
+        $q = DB::table('permohonan')->insert([
+            'nama' => $request['name'],
+            'keterangan' => $request['keterangan'],
+            'perihal' => $request['perihal'],
+            'tanggal' => $request['tanggal'],
+            'waktu' => $request['jam'],
+            'file_gambar' => $nama_file,
+            'status' => 'Proses',
+        ]);
+        if ($q) {
+            $nama = $request['name'];
+            return redirect('/home')->with('status', "$nama, Pengajuan Sakit sedang di proses");
+        }
+        return redirect('/home')->with('status', "Maaf Konfirmasi anda gagal");
+    }
+
 
     public function keluar(Request $request, $id)
     {
@@ -52,27 +115,57 @@ class HomeController extends Controller
             echo "<script>location='/home';</script>";
         }           
     }
+    public function permohonan()
+    {
+        $permohonan = DB::table('permohonan')->where('nama',Auth::user()->name)
+        ->orderBy('tanggal','desc')
+        ->get();
+
+
+        return view('permohonan',['permohonan'=> $permohonan]);
+
+    }
+
+    public function edit_profile()
+    {
+        $users = DB::table('users')->where('name',Auth::user()->name)->get();
+
+
+        return view('edit_profile',['users'=> $users]);
+
+    }
+
+    public function update(Request $request)
+    {
+        DB::table('users')->where('name',Auth::user()->name)->update([
+            'name' => $request->nama,
+            'email' => $request->email,
+            'nip' => $request->nip]);
+    // alihkan halaman ke halaman pegawai
+        return redirect('/admin');
+    }
 
     public function absen(Request $request)
     {
+
         if (Auth::user()->nip == $request['nip']) {
 
-           $status = DB::table('users')->where('nip', $request['nip'])->count();
-           if ($status > 0) {
+         $status = DB::table('users')->where('nip', $request['nip'])->count();
+         if ($status > 0) {
             $pegawai = DB::table('users')->where('nip', $request['nip'])->get();
             $idPeg = json_decode(json_encode($pegawai) , true)[0]['id'];
 
             $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->count();
 
             if ($query > 0) {
-               $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->get();
+             $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->Where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->get();
 
-               $ket =  json_decode(json_encode($query) , true)[0]['tanggal_absen'];
-               $tanggal = explode('-', $ket);
+             $ket =  json_decode(json_encode($query) , true)[0]['tanggal_absen'];
+             $tanggal = explode('-', $ket);
 
-               $tanggal = mktime(0,0,0, $tanggal[1], $tanggal[2], $tanggal[0]);
-               $now = time();
-               if (($tanggal+259200) < $now) {
+             $tanggal = mktime(0,0,0, $tanggal[1], $tanggal[2], $tanggal[0]);
+             $now = time();
+             if (($tanggal+259200) < $now) {
                 $nama = json_decode(json_encode($pegawai) , true)[0]['name'];
                 date_default_timezone_set("Asia/Jakarta");
                 $date = date ('Y-m-d');
@@ -81,9 +174,10 @@ class HomeController extends Controller
                     'id_pegawai' => $idPeg,
                     'tanggal_absen' => $date,
                     'jam_masuk' => $jam,
-                    'keterangan' => "Hadir"
+                    'keterangan' => $request['keterangan']
                 ]);
-                return redirect('/home')->with('status', "$nama, Anda sudah tidak datang lebih dari 3 hari, Harap Hubungi HRD..!!");
+                session()->forget('status');
+                return redirect('/home');
             }
 
         }
@@ -96,7 +190,7 @@ class HomeController extends Controller
 
 
 }else{
-   return redirect('/home')->with('status', "Kode Unik anda tidak cocok..!!");
+ return redirect('/home')->with('status', "Kode Unik anda tidak cocok..!!");
 }
 
 date_default_timezone_set("Asia/Jakarta");

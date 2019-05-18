@@ -18,35 +18,154 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->paginate(6);
 
-
+        $permohonan = DB::table('permohonan')
+        ->where('status','Proses')
+        ->count();
+        
+        if ($permohonan > 0) {
+            session()->put('status', "ada permohonan baru");
+            return view('admin.index',['users'=> $users]);
+        }
 
         return view('admin.index',['users'=> $users]);
 
+
     }
 
-    public function home()
+    public function cari(Request $request)
     {
+        // menangkap data pencarian
+        $cari = $request->cari;
+            // mengambil data dari table users sesuai pencarian data
+        $users = DB::table('users')
+        ->where('name','like',"%".$cari."%")
+        ->orwhere('email','like',"%".$cari."%")
+        ->orwhere('nip','like',"%".$cari."%")
+        ->orwhere('admin','like',"%".$cari."%")
+        ->paginate();
+
+            // mengirim data users ke view index
+        return view('admin.index',['users' => $users]);
+
+    }
+
+    public function cari_p(Request $request)
+    {
+        // menangkap data pencarian
+        $cari = $request->cari;
+            // mengambil data dari table users sesuai pencarian data
+        $users = DB::table('permohonan')
+        ->where('nama','like',"%".$cari."%")
+        ->orwhere('tanggal','like',"%".$cari."%")
+        ->orwhere('waktu','like',"%".$cari."%")
+        ->orwhere('keterangan','like',"%".$cari."%")
+        ->orwhere('status','like',"%".$cari."%")
+        ->paginate();
+
+            // mengirim data permohonan ke view index
+        return view('admin.permohonan',['permohonan' => $users]);
+
+    }
+
+
+    public function cari_a(Request $request)
+    {
+        // menangkap data pencarian
+        $cari = $request->cari;
+            // mengambil data dari table users sesuai pencarian data
         $absensi = DB::table('absensi')
         ->join('users', 'absensi.id_pegawai', '=', 'users.id')
-        ->get();
+        ->where('name','like',"%".$cari."%")
+        ->orwhere('tanggal_absen','like',"%".$cari."%")
+        ->orwhere('jam_masuk','like',"%".$cari."%")
+        ->orwhere('jam_keluar','like',"%".$cari."%")
+        ->orwhere('keterangan','like',"%".$cari."%")
+        ->paginate();
 
-        // mengirim data absensi ke view index
+            // mengirim data permohonan ke view index
         return view('admin.home',['absensi' => $absensi]);
 
     }
 
-    public function hapus($name)
+
+    public function permohonan()
     {
-    // menghapus data pegawai berdasarkan id yang dipilih
-        DB::table('users')->where('name',$name)->delete();
-        
-    // alihkan halaman ke halaman pegawai
-        return redirect('/admin');
+        $permohonan = DB::table('permohonan')
+        ->orderBy('tanggal','desc')
+        ->orderBy('waktu','desc')
+        ->paginate(6);
+
+
+        return view('admin.permohonan',['permohonan'=> $permohonan]);
+
     }
 
-    
+
+
+    public function konfirmasi($id)
+    {
+     DB::table('permohonan')->where('id',$id)->update([
+        'status' => "Confirm"]);
+     $nama1 = DB::table('permohonan')->where('id',$id)->get();
+     $nama = json_decode(json_encode($nama1) , true)[0];
+
+     $absensi = DB::table('users')
+     ->where('name',$nama['nama'])
+     ->get();
+     $absensi1= json_decode(json_encode($absensi) , true)[0]['id'];
+
+     $q = DB::table('absensi')->insert([
+        'id_pegawai' => $absensi1,
+        'tanggal_absen' => $nama['tanggal'],
+        'keterangan' => $nama['keterangan']
+    ]);
+    // alihkan halaman ke halaman pegawai
+     return redirect('/admin/permohonan')->with('status', "Permohonan berhasil Di konfirmasi");
+ }
+
+ public function batal($id)
+ {
+
+    DB::table('permohonan')->where('id',$id)->update([
+        'status' => "Reject"]);
+    // alihkan halaman ke halaman pegawai
+    return redirect('/admin/permohonan');
+}
+
+
+public function home()
+{
+    $absensi = DB::table('absensi')
+    ->join('users', 'absensi.id_pegawai', '=', 'users.id')->orderBy('tanggal_absen','desc')
+    ->get();
+
+        // mengirim data absensi ke view index
+    return view('admin.home',['absensi' => $absensi]);
+
+}
+
+public function hapus($name)
+{
+    // menghapus data pegawai berdasarkan id yang dipilih
+    DB::table('users')->where('name',$name)->delete();
+
+    // alihkan halaman ke halaman pegawai
+    return redirect('/admin');
+}
+
+public function hapus_p($id)
+{
+    // menghapus data pegawai berdasarkan id yang dipilih
+
+    DB::table('absensi')->where('id_absensi',$id)->delete();
+
+    // alihkan halaman ke halaman pegawai
+    return redirect('/admin/home');
+}
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -69,10 +188,10 @@ class AdminController extends Controller
     {
         $users = DB::table('users')->where('id',$id)->get();
     // passing data users yang didapat ke view edit.blade.php
-    return view('admin/edit',['users' => $users]);
+        return view('admin/edit',['users' => $users]);
     }
 
-   
+
 
     /**
      * Update the specified resource in storage.
@@ -89,7 +208,7 @@ class AdminController extends Controller
             'nip' => $request->nip,
             'admin' => $request->level]);
     // alihkan halaman ke halaman pegawai
-    return redirect('/admin');
+        return redirect('/admin');
     }
 
     /**
