@@ -4,12 +4,7 @@
 <div class="content">
     <div class="row">
         <div class="container-fluid">
-         @if (session('status'))
-         <div class="container alert text-center">
-            <div class="alert alert-danger" role="alert">
-                <strong> Warning! </strong></p> {{ session('status') }}
-            </div>
-            @endif
+        
         </div>    
     </div>
 
@@ -90,7 +85,7 @@
                     <td>{{ $p->jam_keluar }}</td>
                     <td>{{ $p->keterangan }}</td>
 
-                    <td class="mx-1 px-1><a href="/admin/edit_p/{{ $p->id_absensi }}" class="btn btn-warning
+                    <td class="mx-1 px-1"><a href="/admin/edit_p/{{ $p->id_absensi }}" class="btn btn-warning
                         ">Edit</a></td>
 
                         <td class="mx-1 px-0"><a href="/admin/hapus_p/{{ $p->id_absensi }}" class="btn btn-danger
