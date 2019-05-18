@@ -21,7 +21,7 @@ class AdminController extends Controller
         $users = DB::table('users')->paginate(6);
 
         $permohonan = DB::table('permohonan')
-        ->where('status','Proses')
+        ->where('status','')
         ->count();
         
         if ($permohonan > 0) {
@@ -141,7 +141,7 @@ public function batal($id)
     DB::table('permohonan')->where('id',$id)->update([
         'status' => "Reject"]);
     // alihkan halaman ke halaman pegawai
-    return redirect('/admin/permohonan');
+    return redirect('/admin/permohonan')->with('status', "Permohonan berhasil Di Tolak");
 }
 
 
@@ -231,7 +231,7 @@ public function hapus_p($id)
     public function update_p(Request $request)
     {
         DB::table('absensi')->where('id_absensi',$request->id_absensi)->update([
-            
+
             'tanggal_absen' => $request->tanggal_absen,
             'jam_masuk' => $request->jam_masuk,
             'jam_keluar' => $request->jam_keluar,
