@@ -74,7 +74,7 @@
                 <th>Jam Masuk</th>
                 <th>Jam Keluar</th>
                 <th>Keterangan</th>
-                <th>Option</th>
+                 <th colspan="2" class="text-center">Aksi</th>                        </tr>
             </thead>
             <?php 
             $no = 1;
@@ -89,9 +89,11 @@
                     <td>{{ $p->jam_masuk }}</td>
                     <td>{{ $p->jam_keluar }}</td>
                     <td>{{ $p->keterangan }}</td>
-                    <td><a href="/admin/edit_p/{{ $p->id_absensi }}" class="btn btn-warning
-                        ">Edit</a>
-                        <a href="/admin/hapus_p/{{ $p->id_absensi }}" class="btn btn-danger
+
+                    <td class="mx-1 px-1><a href="/admin/edit_p/{{ $p->id_absensi }}" class="btn btn-warning
+                        ">Edit</a></td>
+
+                        <td class="mx-1 px-0"><a href="/admin/hapus_p/{{ $p->id_absensi }}" class="btn btn-danger
                             ">Hapus</a>
                         </td>
 
