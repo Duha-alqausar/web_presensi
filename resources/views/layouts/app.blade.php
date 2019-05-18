@@ -64,12 +64,6 @@
               <p>Dashboard</p>
           </a>
       </li>
-      <li>
-        <a href="/home">
-          <i class="nc-icon nc-tile-56"></i>
-          <p>Presensi</p>
-      </a>
-  </li>
   <li>
     <a href="/home/permohonan">
       <i class="nc-icon nc-bell-55"></i>
