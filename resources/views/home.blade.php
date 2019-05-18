@@ -126,6 +126,13 @@
                     <td><a href="/home/keluar/{{ $p->id_absensi }}" class="btn btn-danger
                         @if( Auth::user()->name != $p->name )
                         disabled
+
+                        @elseif( $p->keterangan == 'Izin' )
+                        disabled
+
+                        @elseif( $p->keterangan == 'Sakit' )
+                        disabled
+
                         @elseif( $p->tanggal_absen != date ('Y-m-d') )
                         disabled
                         @endif

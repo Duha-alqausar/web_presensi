@@ -44,5 +44,6 @@ Route::group(['prefix' => 'admin','middleware' => ['admin','auth']], function(){
 	Route::get('/cari_p','AdminController@cari_p');
 	Route::get('/cari_a','AdminController@cari_a');
 	Route::get('/hapus_p/{id}','AdminController@hapus_p');
-
+	Route::get('/edit_p/{id}','AdminController@edit_p');
+	Route::post('/update_p','AdminController@update_p')->name('update_p');
 });

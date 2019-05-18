@@ -116,6 +116,16 @@ class AdminController extends Controller
      ->get();
      $absensi1= json_decode(json_encode($absensi) , true)[0]['id'];
 
+
+$date = date ('Y-m-d');
+$q = DB::table('absensi')->where('id_pegawai', $absensi1)
+->Where('tanggal_absen', $date)->count();
+
+if ($q > 0) {
+    echo "<script>alert('Anda Sudah Absen Hari Ini')</script>";
+    echo "<script>location='/admin/permohonan';</script>";exit;
+}
+
      $q = DB::table('absensi')->insert([
         'id_pegawai' => $absensi1,
         'tanggal_absen' => $nama['tanggal'],
@@ -191,6 +201,13 @@ public function hapus_p($id)
         return view('admin/edit',['users' => $users]);
     }
 
+    public function edit_p($id)
+    {
+        $absensi = DB::table('absensi')->where('id_absensi',$id)->get();
+    // passing data absensi yang didapat ke view edit.blade.php
+        return view('admin/edit_p',['absensi' => $absensi]);
+    }
+
 
 
     /**
@@ -209,6 +226,18 @@ public function hapus_p($id)
             'admin' => $request->level]);
     // alihkan halaman ke halaman pegawai
         return redirect('/admin');
+    }
+
+    public function update_p(Request $request)
+    {
+        DB::table('absensi')->where('id_absensi',$request->id_absensi)->update([
+            
+            'tanggal_absen' => $request->tanggal_absen,
+            'jam_masuk' => $request->jam_masuk,
+            'jam_keluar' => $request->jam_keluar,
+           ]);
+    // alihkan halaman ke halaman pegawai
+        return redirect('/admin/home');
     }
 
     /**

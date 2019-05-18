@@ -15,7 +15,7 @@
     <title>@yield('title')</title>
 
     <!-- Scripts -->
-    
+
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -57,8 +57,8 @@
 @else
 <div class="sidebar-wrapper">
     <ul class="nav">
-      
-      <li class="active ">
+
+        <li>
         <a href="{{ url('/admin') }}">
           <i class="nc-icon nc-bank"></i>
           <p>Dashboard</p>
@@ -106,7 +106,7 @@
     <span class="navbar-toggler-bar navbar-kebab"></span>
 </button>
 <div class="collapse navbar-collapse justify-content-end" id="navigation">
-    
+
     <ul class="navbar-nav">
       <li class="nav-item btn-rotate dropdown">
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -120,7 +120,7 @@
     </a>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
       <a class="dropdown-item text-danger" href="#" >{{session('status')}}</a>
-      
+
   </div>
 
   @else
@@ -136,7 +136,7 @@
 @endif
 <li class="nav-item btn-rotate dropdown">
     <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       
+
       <i class="nc-icon nc-circle-10"></i><font class="text-capitalize">  {{ Auth::user()->name }}</font>
       <p>
         <span class="d-lg-none d-md-block">Account</span>
