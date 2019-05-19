@@ -23,6 +23,7 @@ Route::post('/home/izin','HomeController@izin')->name('izin');
 Route::post('/home/sakit','HomeController@sakit')->name('sakit');
 Route::get('/home/permohonan','HomeController@permohonan')->name('permohonan');
 Route::get('/home/edit_profile','HomeController@edit_profile')->name('edit_profile');
+Route::get('/home/profile','HomeController@profile')->name('profile');
 Route::post('/home/update','HomeController@update')->name('update');
 
 

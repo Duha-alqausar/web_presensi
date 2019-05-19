@@ -6,7 +6,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">{{ __('Register') }}</div>
+                        <div class="card-header">{{ __('Edit User') }}</div>
 
                         <div class="card-body">
                             @foreach($users as $u)

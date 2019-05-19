@@ -89,7 +89,7 @@
                         ">Edit</a></td>
 
                         <td class="mx-1 px-0"><a href="/admin/hapus_p/{{ $p->id_absensi }}" class="btn btn-danger
-                            ">Hapus</a>
+                            " onclick="return confirm('Anda yakin mau menghapus item ini ?')">Hapus</a>
                         </td>
 
                     </td>

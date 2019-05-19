@@ -60,18 +60,18 @@
 
         <li>
             <a href="{{ url('/admin') }}">
-              <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
+              <i class="nc-icon nc-calendar-60"></i>
+              <p>Presensi</p>
           </a>
       </li>
   <li>
     <a href="/home/permohonan">
-      <i class="nc-icon nc-bell-55"></i>
+      <i class="nc-icon nc-email-85"></i>
       <p>Permohonan</p>
   </a>
 </li>
 <li>
-    <a href="/home/edit_profile">
+    <a href="/home/profile">
       <i class="nc-icon nc-single-02"></i>
       <p>User Profile</p>
   </a>
@@ -106,15 +106,15 @@
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
 
-          @if(session('status'))
+          @if(session('status') or session('sukses'))
           <i class="fas fa-bell text-danger"></i>
           <p>
             <span class="d-lg-none d-md-block">Some Actions</span>
         </p>
     </a>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-      <a class="dropdown-item text-danger" href="#" >{{session('status')}}</a>
-
+      <a class="dropdown-item text-danger" href="tel:+6287883730944" >{{session('status')}}</a>
+      <a class="dropdown-item text-success" href="#" >{{session('sukses')}}</a>
   </div>
 
   @else

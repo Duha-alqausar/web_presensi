@@ -20,7 +20,11 @@
                     <span id="detik"><?php print date('s'); ?></span></div> 
                 </div>
             </div>
-
+@if (session('sakit'))
+            <div class="alert alert-success" role="alert">
+              {{ session('sakit') }}
+            </div>
+            @endif
 
 
         </div>

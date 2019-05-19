@@ -27,9 +27,13 @@
           <div class="card-body">
 
 
-            @if (session('status'))
-            <div class="alert alert-warning" role="alert">
-              {{ session('status') }}
+            @if (session('status1'))
+            <div class="alert alert-success" role="alert">
+              {{ session('status1') }}
+            </div>
+            @elseif(session('status2'))
+            <div class="alert alert-danger" role="alert">
+              {{ session('status2') }}
             </div>
             @endif
 

@@ -41,75 +41,79 @@
                                 </div>
 
 
-                                <div class="form-group row">
-                                    <label for="nip" class="col-md-4 col-form-label text-md-right">{{ __('Kode Unik') }}</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="level" class="col-md-4 col-form-label text-md-right">{{ __('Hak Akses') }}</label>
 
-                                    <div class="col-md-6">
-                                        <input id="nip" type="nip" class="form-control @error('nip') is-invalid @enderror" name="nip" value="{{ old('nip') }}" required autocomplete="nip">
+                                <div class="col-md-6">
+                                    <select name="level"  class="form-control @error('level') is-invalid @enderror" type="level" value="{{ old('level') }}" required autocomplete="level">
+                                        <option value="" disabled selected=""></option>
+                                        <option value="0">
+                                            User
+                                        </option>
+                                        <option value="1">
+                                            Admin
+                                        </option>
+                                    </select>
 
-                                        @error('nip')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                    @error('level')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
-                                <div class="form-group row">
-                                    <label for="level" class="col-md-4 col-form-label text-md-right">{{ __('Hak Akses') }}</label>
+                            </div>
 
-                                    <div class="col-md-6">
-                                        <select name="level"  class="form-control @error('level') is-invalid @enderror" type="level" value="{{ old('level') }}" required autocomplete="level">
-                                            <option value="" disabled selected=""></option>
-                                            <option value="0">
-                                                User
-                                            </option>
-                                            <option value="1">
-                                                Admin
-                                            </option>
-                                        </select>
 
-                                        @error('level')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
+                            </div>
 
+                            <div class="form-group row">
+                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
-                                <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                        @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                <div class="col-md-6">
+                                    <input id="confirm_password" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
+                            </div>
 
-                                <div class="form-group row">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                    </div>
+                            <div class="form-group row mb-0">
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Register') }}
+                                    </button>
                                 </div>
-
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Register') }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        @endsection
+    </div>
+    <script>
+
+        var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+        function validatePassword(){
+          if(password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+</script>
+@endsection

@@ -57,20 +57,20 @@
     <ul class="nav">
       <li>
         <a href="{{ url('/admin') }}">
-          <i class="nc-icon nc-bank"></i>
-          <p>Dashboard</p>
+          <i class="nc-icon nc-badge"></i>
+          <p>Users</p>
       </a>
   </li>
 
   <li>
     <a href="/admin/home">
-      <i class="nc-icon nc-tile-56"></i>
+      <i class="nc-icon nc-calendar-60"></i>
       <p>Presensi</p>
   </a>
 </li>
 <li>
     <a href="/admin/permohonan">
-      <i class="nc-icon nc-bell-55"></i>
+      <i class="nc-icon nc-email-85"></i>
       <p>Permohonan</p>
   </a>
 </li>

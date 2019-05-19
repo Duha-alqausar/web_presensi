@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -65,9 +66,9 @@ class HomeController extends Controller
         ]);
         if ($q) {
             $nama = $request['name'];
-            return redirect('/home')->with('status', "$nama, Pengajuan Izin sedang di proses");
+            return redirect('/home')->with('sakit', "$nama, Pengajuan Izin sedang di proses");
         }
-        return redirect('/home')->with('status', "Maaf Konfirmasi anda gagal");
+        return redirect('/home')->with('sakit', "Maaf Konfirmasi anda gagal");
     }
 
 
@@ -91,9 +92,9 @@ class HomeController extends Controller
         ]);
         if ($q) {
             $nama = $request['name'];
-            return redirect('/home')->with('status', "$nama, Pengajuan Sakit sedang di proses");
+            return redirect('/home')->with('sakit', "$nama, Pengajuan Sakit sedang di proses");
         }
-        return redirect('/home')->with('status', "Maaf Konfirmasi anda gagal");
+        return redirect('/home')->with('sakit', "Maaf Konfirmasi anda gagal");
     }
 
 
@@ -134,15 +135,24 @@ class HomeController extends Controller
         return view('edit_profile',['users'=> $users]);
 
     }
+    public function profile()
+    {
+        $users = DB::table('users')->where('name',Auth::user()->name)->get();
+
+
+        return view('profile',['users'=> $users]);
+
+    }
 
     public function update(Request $request)
     {
         DB::table('users')->where('name',Auth::user()->name)->update([
             'name' => $request->nama,
             'email' => $request->email,
-            'nip' => $request->nip]);
+            'nip' => '0',
+            'password' => Hash::make($request['password']),]);
     // alihkan halaman ke halaman pegawai
-        return redirect('/admin');
+        return redirect('/home')->with('sukses', "Update Profile sukses");
     }
 
     public function absen(Request $request)

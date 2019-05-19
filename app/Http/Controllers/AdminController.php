@@ -21,7 +21,7 @@ class AdminController extends Controller
         $users = DB::table('users')->paginate(6);
 
         $permohonan = DB::table('permohonan')
-        ->where('status','')
+        ->where('status','Proses')
         ->count();
         
         if ($permohonan > 0) {
@@ -122,17 +122,18 @@ class AdminController extends Controller
        ->Where('tanggal_absen', $date)->count();
 
        if ($q > 0) {
-        echo "<script>alert('Anda Sudah Absen Hari Ini')</script>";
-        echo "<script>location='/admin/permohonan';</script>";exit;
-    }
-
-    $q = DB::table('absensi')->insert([
+       return redirect('/admin/permohonan')->with('status2', "Anda sudah absen,Permohonan Gagal Di konfirmasi");
+    }else{
+        $q = DB::table('absensi')->insert([
         'id_pegawai' => $absensi1,
         'tanggal_absen' => $nama['tanggal'],
         'keterangan' => $nama['keterangan']
     ]);
     // alihkan halaman ke halaman pegawai
-    return redirect('/admin/permohonan')->with('status', "Permohonan berhasil Di konfirmasi");
+    return redirect('/admin/permohonan')->with('status1', "Permohonan berhasil Di konfirmasi");
+    }
+
+    
 }
 
 public function batal($id)
@@ -141,7 +142,7 @@ public function batal($id)
     DB::table('permohonan')->where('id',$id)->update([
         'status' => "Reject"]);
     // alihkan halaman ke halaman pegawai
-    return redirect('/admin/permohonan')->with('status', "Permohonan berhasil Di Tolak");
+    return redirect('/admin/permohonan')->with('status1', "Permohonan berhasil Di Tolak");
 }
 
 
@@ -259,7 +260,7 @@ public function hapus_p($id)
     public function proses(Request $request)
     {
         DB::table('users')->insert([
-            'nip' => $request['nip'],
+            'nip' => '0',
             'name' => $request['name'],
             'email' => $request['email'],
             'admin' => $request['level'],
