@@ -1,0 +1,26 @@
+.contentt {
+	margin-top: 150px;
+}
+
+.card {
+	border-radius: 25px;
+}
+
+.btn .btn-black {
+	background-color: #007bf0;
+}
+
+body:before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  z-index: -1;
+  background-size:cover;
+  background-position:center top;
+  display: block;
+  background-image: url(../upload_gambar/background.jpg);
+  width: 100%;
+  height: 100%;
+  filter: blur(2px) ;
+  -webkit-filter: blur(2px) ;
+}
