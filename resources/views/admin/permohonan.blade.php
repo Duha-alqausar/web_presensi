@@ -77,7 +77,8 @@
 
 
                   <td class="mx-1 px-1">
-                    <a href="/admin/konfirmasi/{{ $p->id }}" class="btn btn-sm btn-success">Konfirmasi</a></td>
+                    <a href="/admin/konfirmasi/{{ $p->id }}{{session()->forget('status');}}" class="btn btn-sm btn-success">Konfirmasi</a></td>
+
                     <td class="mx-1 px-0">
                       <a href="/admin/batal/{{ $p->id }}" class="btn btn-sm btn-danger">Tolak</a>
                     </td>
