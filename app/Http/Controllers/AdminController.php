@@ -122,7 +122,7 @@ class AdminController extends Controller
        ->Where('tanggal_absen', $date)->count();
 
        if ($q > 0) {
-       return redirect('/admin/permohonan')->with('status2', "$nama sudah absen,Permohonan Berhasil Di konfirmasi");
+       return redirect('/admin/permohonan')->with('status2', "Dia sudah absen,Permohonan berhasil Di konfirmasi");
     }else{
         $q = DB::table('absensi')->insert([
         'id_pegawai' => $absensi1,
