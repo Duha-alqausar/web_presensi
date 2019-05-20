@@ -236,6 +236,7 @@ public function hapus_p($id)
             'tanggal_absen' => $request->tanggal_absen,
             'jam_masuk' => $request->jam_masuk,
             'jam_keluar' => $request->jam_keluar,
+            'keterangan' => $request->keterangan,
         ]);
     // alihkan halaman ke halaman pegawai
         return redirect('/admin/home');
