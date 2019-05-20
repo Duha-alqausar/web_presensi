@@ -37,7 +37,7 @@
 
             <div class="row justify-content-center">
 
-                <button type="submit" class="btn btn-light" name="keterangan" value="hadir">Hadir</button>
+                <button type="submit" class="btn btn-light" name="keterangan" value="Hadir">Hadir</button>
 
             </form>
 
