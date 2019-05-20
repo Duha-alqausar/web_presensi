@@ -98,6 +98,8 @@
             </tbody>
             @endforeach
         </table>
+        <b>Hal : {{ $absensi->currentPage() }} dari {{$absensi->lastPage()}}</b>
+            <div class="float-right">{{ $absensi->links() }}</div>
     </div>
 </div>
 </div>

@@ -28,7 +28,7 @@ class HomeController extends Controller
     {
         $absensi = DB::table('absensi')
         ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('name',Auth::user()->name)
-        ->get();
+        ->paginate(6);
         $idPeg = Auth::user()->id;
 
         $query = DB::table('absensi')->select('tanggal_absen','id_pegawai')->where('keterangan','Hadir')->where('id_pegawai',$idPeg)->orderBy('tanggal_absen','desc')->count();
@@ -120,7 +120,7 @@ class HomeController extends Controller
     {
         $permohonan = DB::table('permohonan')->where('nama',Auth::user()->name)
         ->orderBy('tanggal','desc')
-        ->get();
+        ->paginate(6);
 
 
         return view('permohonan',['permohonan'=> $permohonan]);

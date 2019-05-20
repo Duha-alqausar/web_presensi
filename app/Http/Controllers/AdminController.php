@@ -150,7 +150,7 @@ public function home()
 {
     $absensi = DB::table('absensi')
     ->join('users', 'absensi.id_pegawai', '=', 'users.id')->orderBy('tanggal_absen','desc')
-    ->get();
+    ->paginate(6);
 
         // mengirim data absensi ke view index
     return view('admin.home',['absensi' => $absensi]);

@@ -46,6 +46,8 @@
               @endforeach
             </tbody>
           </table>
+           <b>Hal : {{ $permohonan->currentPage() }} dari {{$permohonan->lastPage()}}</b>
+            <div class="float-right">{{ $permohonan->links() }}</div>
         </div>
       </div>
     </div>

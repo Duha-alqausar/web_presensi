@@ -69,8 +69,8 @@
               </table>
             </tbody>
           </div>
-          <b>Halaman : {{ $users->currentPage() }}</b>
-          <div class="float-right">{{ $users->links() }}</div>
+          <b>Hal : {{ $users->currentPage() }} dari {{$users->lastPage()}}</b>
+            <div class="float-right">{{ $users->links() }}</div>
         </div>
       </div>
     </div> 
