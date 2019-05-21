@@ -36,8 +36,12 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-
-        return view('admin.dashboard');
+        date_default_timezone_set("Asia/Jakarta");
+        $date = date ('Y-m-d');
+        $users = DB::table('users')->count();
+        $presensi = DB::table('absensi')->where('tanggal_absen',$date)->count();
+        $permohonan = DB::table('permohonan')->count();
+        return view('admin.dashboard',['users'=>$users],['absensi'=>$presensi]);
 
 
     }
@@ -114,31 +118,31 @@ class AdminController extends Controller
 
     public function konfirmasi($id)
     {
-       DB::table('permohonan')->where('id',$id)->update([
+     DB::table('permohonan')->where('id',$id)->update([
         'status' => "Confirm"]);
-       $nama1 = DB::table('permohonan')->where('id',$id)->get();
-       $nama = json_decode(json_encode($nama1) , true)[0];
+     $nama1 = DB::table('permohonan')->where('id',$id)->get();
+     $nama = json_decode(json_encode($nama1) , true)[0];
 
-       $absensi = DB::table('users')
-       ->where('name',$nama['nama'])
-       ->get();
-       $absensi1= json_decode(json_encode($absensi) , true)[0]['id'];
+     $absensi = DB::table('users')
+     ->where('name',$nama['nama'])
+     ->get();
+     $absensi1= json_decode(json_encode($absensi) , true)[0]['id'];
 
 
-       $date = date ('Y-m-d');
-       $q = DB::table('absensi')->where('id_pegawai', $absensi1)
-       ->Where('tanggal_absen', $date)->count();
+     $date = date ('Y-m-d');
+     $q = DB::table('absensi')->where('id_pegawai', $absensi1)
+     ->Where('tanggal_absen', $date)->count();
 
-       if ($q > 0) {
-       return redirect('/admin/permohonan')->with('status2', "Dia sudah absen,Permohonan berhasil Di konfirmasi");
-    }else{
+     if ($q > 0) {
+         return redirect('/admin/permohonan')->with('status2', "Dia sudah absen,Permohonan berhasil Di konfirmasi");
+     }else{
         $q = DB::table('absensi')->insert([
-        'id_pegawai' => $absensi1,
-        'tanggal_absen' => $nama['tanggal'],
-        'keterangan' => $nama['keterangan']
-    ]);
+            'id_pegawai' => $absensi1,
+            'tanggal_absen' => $nama['tanggal'],
+            'keterangan' => $nama['keterangan']
+        ]);
     // alihkan halaman ke halaman pegawai
-    return redirect('/admin/permohonan')->with('status1', "Permohonan berhasil Di konfirmasi");
+        return redirect('/admin/permohonan')->with('status1', "Permohonan berhasil Di konfirmasi");
     }
 
     
