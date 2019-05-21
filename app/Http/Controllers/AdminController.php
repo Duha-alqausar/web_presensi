@@ -273,7 +273,7 @@ public function hapus_p($id)
     public function proses(Request $request)
     {
         DB::table('users')->insert([
-            'nip' => '0',
+            'nip' => $request['nip'],
             'name' => $request['name'],
             'email' => $request['email'],
             'admin' => $request['level'],

@@ -206,7 +206,6 @@ class HomeController extends Controller
 date_default_timezone_set("Asia/Jakarta");
 $date = date ('Y-m-d');
 $jam = date ('H:i:s');
-
 $q = DB::table('absensi')->where('id_pegawai', $idPeg)
 ->Where('tanggal_absen', $date)->count();
 

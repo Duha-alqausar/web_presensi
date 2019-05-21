@@ -43,6 +43,7 @@
                   <th>No.</th>
                   <th>Nama</th>
                   <th>Email</th>
+                  <th>NIP</th>
                   <th>Level</th>
                   <th colspan="2" class="text-center">Aksi</th>                        </tr>
                 </thead>
@@ -54,7 +55,13 @@
                   <th scope="row">{{$no++}}</th>
                   <td>{{$p->name}}</td>
                   <td>{{$p->email}}</td>
-                  <td>{{$p->admin}}</td>
+                  <td>{{$p->nip}}</td>
+                  <td>@if($p->admin == 1)
+                          Admin
+                        @elseif($p->admin != 1)
+                        User
+                        @endif
+                        </td>
 
                   <td class="mx-1 px-1">
                     <a href="/admin/edit/{{ $p->id }}" class="btn btn-sm btn-warning">Edit</a>

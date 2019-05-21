@@ -1,6 +1,7 @@
  @extends('admin.app')
 @section('content')
 @section('title','Sistem Presensi')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
  <div class="content">
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-6">
@@ -87,11 +88,16 @@
           <div class="col-md-12">
             <div class="card ">
               <div class="card-header ">
-                <h5 class="card-title">Users Behavior</h5>
-                <p class="card-category">24 Hours performance</p>
+                <h5 class="card-title">User Attendance</h5>
+                <p class="card-category">Today Attendance</p>
               </div>
               <div class="card-body ">
-                <canvas id=chartHours width="400" height="100"></canvas>
+                <div style="width: 800px;margin: 0px auto;">
+    <canvas id="myChart"></canvas>
+  </div>
+                
+
+
               </div>
               <div class="card-footer ">
                 <hr>
@@ -102,5 +108,62 @@
             </div>
           </div>
         </div>
+        <script>
+                  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ["Hadir", "Sakit", "Izin", "Tanpa Keterangan"],
+      datasets: [{
+        label: '',
+        data: [
+        <?php 
+         $hadir = DB::table('absensi')->where('keterangan','Hadir')->where('tanggal_absen',date('Y-m-d'))->count();
+         echo $hadir;
+        ?>, 
+        <?php 
+         $sakit = DB::table('absensi')->where('keterangan','Sakit')
+         ->where('tanggal_absen',date('Y-m-d'))->count();
+         echo $sakit;
+        ?>,
+        <?php 
+         $izin = DB::table('absensi')->where('keterangan','Izin')
+         ->where('tanggal_absen',date('Y-m-d'))->count();
+         echo $izin;
+        ?>,
+        <?php 
+         $jumlah = $users - $absensi;
+         echo $jumlah;
+        ?>
+
+        
+
+        ],
+        backgroundColor: [
+        "#6bd098",
+        "#f17e5d",
+        "#fcc468",
+        "#cccccc"
+        ],
+        borderColor: [
+        "#6bd098",
+        "#f17e5d",
+        "#fcc468",
+        "#cccccc"
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
+</script>
         
       @endsection

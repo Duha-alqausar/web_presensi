@@ -65,6 +65,22 @@
                             </div>
 
 
+                             <div class="form-group row">
+                                <label for="nip" class="col-md-4 col-form-label text-md-right">{{ __('Nip') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="nip" type="number" class="form-control @error('nip') is-invalid @enderror" name="nip" required autocomplete="new-nip">
+
+                                    @error('nip')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
