@@ -60,6 +60,7 @@
   </div></form></div></div>
 
   <div class="card-body">
+    <a href="/admin/absensi/export_excel" class="btn btn-success my-3" target="_blank">EXPORT EXCEL</a>
      <div class="table-responsive-lg">
         <table class="table">
             <thead class="text-primary">

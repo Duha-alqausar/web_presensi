@@ -34,6 +34,14 @@ class AdminController extends Controller
 
     }
 
+    public function dashboard()
+    {
+
+        return view('admin.dashboard');
+
+
+    }
+
     public function cari(Request $request)
     {
         // menangkap data pencarian

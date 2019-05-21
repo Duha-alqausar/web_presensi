@@ -47,4 +47,10 @@ Route::group(['prefix' => 'admin','middleware' => ['admin','auth']], function(){
 	Route::get('/hapus_p/{id}','AdminController@hapus_p');
 	Route::get('/edit_p/{id}','AdminController@edit_p');
 	Route::post('/update_p','AdminController@update_p')->name('update_p');
+
+	Route::get('export-laravel','ExportLaravelController@export');
+	Route::get('/absensi', 'AbsensiController@index');
+	Route::get('/absensi/export_excel', 'AbsensiController@export_excel');
+
+	Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
 });

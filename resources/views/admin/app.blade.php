@@ -55,6 +55,12 @@
 </div>
 <div class="sidebar-wrapper">
     <ul class="nav">
+        <li>
+            <a href="/admin/dashboard">
+              <i class="nc-icon nc-bank"></i>
+              <p>Dashboard</p>
+          </a>
+      </li>
       <li>
         <a href="{{ url('/admin') }}">
           <i class="nc-icon nc-badge"></i>
@@ -135,7 +141,7 @@
     </p>
 </a>
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
- 
+
   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
   document.getElementById('logout-form').submit();" >Logout</a>
 </div>
