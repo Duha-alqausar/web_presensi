@@ -37,7 +37,8 @@ Route::group(['prefix' => 'admin','middleware' => ['admin','auth']], function(){
 	Route::post('/proses','AdminController@proses');
 	Route::post('/update','AdminController@update')->name('update');
 	Route::get('/register','AdminController@register');
-	Route::get('/home', 'AdminController@home')->name('home');
+	Route::get('/presensi', 'AdminController@home')->name('home');
+	Route::get('/users', 'AdminController@users')->name('index');
 	Route::get('/permohonan', 'AdminController@permohonan')->name('permohonan');
 	Route::get('/konfirmasi/{id}','AdminController@konfirmasi');
 	Route::get('/batal/{id}','AdminController@batal');

@@ -56,20 +56,20 @@
 <div class="sidebar-wrapper">
     <ul class="nav">
         <li>
-            <a href="/admin/dashboard">
+            <a href="{{ url('/admin') }}">
               <i class="nc-icon nc-bank"></i>
               <p>Dashboard</p>
           </a>
       </li>
       <li>
-        <a href="{{ url('/admin') }}">
+        <a href="/admin/users">
           <i class="nc-icon nc-badge"></i>
           <p>Users</p>
       </a>
   </li>
 
   <li>
-    <a href="/admin/home">
+    <a href="/admin/presensi">
       <i class="nc-icon nc-calendar-60"></i>
       <p>Presensi</p>
   </a>
@@ -110,14 +110,26 @@
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
           @if(session('status'))
-          <i class="fas fa-bell text-danger"></i>
+          <i class="fas fa-bell text-danger">
+            <?php 
+
+        $nama_p = DB::table('permohonan')
+        ->where('status','Proses')
+        ->get();
+
+        $permohonan = DB::table('permohonan')
+        ->where('status','Proses')
+        ->count();
+         ?>
+           {{$permohonan}}</i>
           <p>
             <span class="d-lg-none d-md-block">Some Actions</span>
         </p>
     </a>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-      <a class="dropdown-item text-danger" href="/admin/permohonan" >{{session('status')}}</a>
-
+        @foreach($nama_p as $n)
+      <a class="dropdown-item text-danger" href="/admin/permohonan" >{{session('status')}}{{$n->nama}}</a>
+        @endforeach
   </div>
 
   @else

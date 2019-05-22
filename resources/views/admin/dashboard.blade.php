@@ -24,8 +24,10 @@
               </div>
               <div class="card-footer ">
                 <hr>
+                  <a href="/admin">
                 <div class="stats">
                   <i class="fa fa-refresh"></i> Update Now
+                  </a>
                 </div>
               </div>
             </div>
@@ -118,16 +120,19 @@
         label: '',
         data: [
         <?php 
-         $hadir = DB::table('absensi')->where('keterangan','Hadir')->where('tanggal_absen',date('Y-m-d'))->count();
+         $hadir = DB::table('absensi')
+        ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('tanggal_absen',date('Y-m-d'))->count();
          echo $hadir;
         ?>, 
         <?php 
-         $sakit = DB::table('absensi')->where('keterangan','Sakit')
+         $sakit = DB::table('absensi')
+        ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('keterangan','Sakit')
          ->where('tanggal_absen',date('Y-m-d'))->count();
          echo $sakit;
         ?>,
         <?php 
-         $izin = DB::table('absensi')->where('keterangan','Izin')
+         $izin = DB::table('absensi')
+        ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('keterangan','Izin')
          ->where('tanggal_absen',date('Y-m-d'))->count();
          echo $izin;
         ?>,

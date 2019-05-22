@@ -18,17 +18,34 @@ class AdminController extends Controller
      */
     public function index()
     {
+        date_default_timezone_set("Asia/Jakarta");
+        $date = date ('Y-m-d');
+        $users = DB::table('users')->count();
+        $presensi = DB::table('absensi')
+        ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('tanggal_absen',$date)->count();
+        $permohonan = DB::table('permohonan')
+        ->where('status','Proses')
+        ->count();
+
+
+        
+        if ($permohonan > 0) {
+            session()->put('status', "ada permohonan baru dari, ");
+            return view('admin.dashboard',['users'=>$users],['absensi'=>$presensi]);
+        }
+        return view('admin.dashboard',['users'=>$users],['absensi'=>$presensi]);
+
+
+    }
+
+    public function users()
+    {
         $users = DB::table('users')->paginate(6);
 
         $permohonan = DB::table('permohonan')
         ->where('status','Proses')
         ->count();
         
-        if ($permohonan > 0) {
-            session()->put('status', "ada permohonan baru");
-            return view('admin.index',['users'=> $users]);
-        }
-
         return view('admin.index',['users'=> $users]);
 
 
@@ -88,8 +105,7 @@ class AdminController extends Controller
         $cari = $request->cari;
             // mengambil data dari table users sesuai pencarian data
         $absensi = DB::table('absensi')
-        ->join('users', 'absensi.id_pegawai', '=', 'users.id')
-        ->where('name','like',"%".$cari."%")
+        ->where('nama','like',"%".$cari."%")
         ->orwhere('tanggal_absen','like',"%".$cari."%")
         ->orwhere('jam_masuk','like',"%".$cari."%")
         ->orwhere('jam_keluar','like',"%".$cari."%")
@@ -137,6 +153,7 @@ class AdminController extends Controller
          return redirect('/admin/permohonan')->with('status2', "Dia sudah absen,Permohonan berhasil Di konfirmasi");
      }else{
         $q = DB::table('absensi')->insert([
+            'nama' => $nama['nama'],
             'id_pegawai' => $absensi1,
             'tanggal_absen' => $nama['tanggal'],
             'keterangan' => $nama['keterangan']
@@ -161,7 +178,7 @@ public function batal($id)
 public function home()
 {
     $absensi = DB::table('absensi')
-    ->join('users', 'absensi.id_pegawai', '=', 'users.id')->orderBy('tanggal_absen','desc')
+    ->orderBy('tanggal_absen','desc')
     ->paginate(6);
 
         // mengirim data absensi ke view index
@@ -185,7 +202,7 @@ public function hapus_p($id)
     DB::table('absensi')->where('id_absensi',$id)->delete();
 
     // alihkan halaman ke halaman pegawai
-    return redirect('/admin/home');
+    return redirect('/admin/presensi');
 }
 
 
@@ -238,7 +255,7 @@ public function hapus_p($id)
             'nip' => $request->nip,
             'admin' => $request->level]);
     // alihkan halaman ke halaman pegawai
-        return redirect('/admin');
+        return redirect('/admin/users');
     }
 
     public function update_p(Request $request)
@@ -251,7 +268,7 @@ public function hapus_p($id)
             'keterangan' => $request->keterangan,
         ]);
     // alihkan halaman ke halaman pegawai
-        return redirect('/admin/home');
+        return redirect('/admin/presensi');
     }
 
     /**

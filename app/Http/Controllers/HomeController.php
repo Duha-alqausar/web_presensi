@@ -181,6 +181,7 @@ class HomeController extends Controller
                 $date = date ('Y-m-d');
                 $jam = date ('H:i:s');
                 $q = DB::table('absensi')->insert([
+                    'nama'=> Auth::user()->name,
                     'id_pegawai' => $idPeg,
                     'tanggal_absen' => $date,
                     'jam_masuk' => $jam,
@@ -215,6 +216,7 @@ if ($q > 0) {
 }
 
 $q = DB::table('absensi')->insert([
+    'nama'=> Auth::user()->name,
     'id_pegawai' => $idPeg,
     'tanggal_absen' => $date,
     'jam_masuk' => $jam,

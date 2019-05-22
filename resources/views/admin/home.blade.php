@@ -4,7 +4,6 @@
 <div class="content">
     <div class="row">
         <div class="container-fluid">
-        
         </div>    
     </div>
 
@@ -80,7 +79,7 @@
                 <tr>
 
                     <th scope="row">{{  $no++ }}</th>
-                    <td>{{ $p->name }}</td>
+                    <td>{{ $p->nama }}</td>
                     <td>{{ $p->tanggal_absen }}</td>
                     <td>{{ $p->jam_masuk }}</td>
                     <td>{{ $p->jam_keluar }}</td>
