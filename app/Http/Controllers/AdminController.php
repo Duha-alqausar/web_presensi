@@ -20,7 +20,7 @@ class AdminController extends Controller
     {
         date_default_timezone_set("Asia/Jakarta");
         $date = date ('Y-m-d');
-        $users = User::where('deleted_at',NULL)->count();
+        $users = User::where('admin',false)->count();
         $presensi = DB::table('absensi')
         ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('tanggal_absen',$date)->count();
         $permohonan = DB::table('permohonan')
