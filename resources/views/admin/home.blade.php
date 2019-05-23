@@ -79,7 +79,7 @@
                 <tr>
 
                     <th scope="row">{{  $no++ }}</th>
-                    <td>{{ $p->nama }}</td>
+                    <td>{{ $p->name }}</td>
                     <td>{{ $p->tanggal_absen }}</td>
                     <td>{{ $p->jam_masuk }}</td>
                     <td>{{ $p->jam_keluar }}</td>

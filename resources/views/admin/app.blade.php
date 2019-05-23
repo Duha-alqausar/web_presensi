@@ -128,7 +128,18 @@
     </a>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
         @foreach($nama_p as $n)
-      <a class="dropdown-item text-danger" href="/admin/permohonan" >{{session('status')}}{{$n->nama}}</a>
+      <a class="dropdown-item text-danger" href="/admin/permohonan" >{{session('status')}}{{$n->nama}}
+         <script type="text/javascript">
+                      function play_sound() {
+                        var audioElement = document.createElement('audio');
+                        audioElement.setAttribute('src', 'css/assets/to-the-point.mp3');
+                        audioElement.setAttribute('autoplay', 'autoplay');
+                        audioElement.load();
+                        audioElement.play();
+                      }
+                    </script>
+                    <?php echo '<script type="text/javascript">play_sound();</script>'; ?>
+      </a>
         @endforeach
   </div>
 

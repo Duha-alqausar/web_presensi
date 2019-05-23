@@ -107,7 +107,7 @@
 
 
           @if(session('status') or session('sukses'))
-          <i class="fas fa-bell text-danger"></i>
+          <i class="fas fa-bell text-danger"> !</i>
           <p>
             <span class="d-lg-none d-md-block">Some Actions</span>
         </p>

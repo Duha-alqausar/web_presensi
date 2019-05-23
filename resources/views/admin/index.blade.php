@@ -14,7 +14,7 @@
       <div class="card-body">
         <div class="row">
           <div class="form-group col-md-9 right">
-            <a href="admin/register" class="btn btn-success">Tambah User</a>
+            <a href="/admin/register" class="btn btn-success">Tambah User</a>
           </div>
           <div class="input-group col-md-3">
 

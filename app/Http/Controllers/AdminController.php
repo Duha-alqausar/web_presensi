@@ -20,7 +20,7 @@ class AdminController extends Controller
     {
         date_default_timezone_set("Asia/Jakarta");
         $date = date ('Y-m-d');
-        $users = DB::table('users')->count();
+        $users = User::where('deleted_at',NULL)->count();
         $presensi = DB::table('absensi')
         ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('tanggal_absen',$date)->count();
         $permohonan = DB::table('permohonan')
@@ -40,7 +40,8 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = DB::table('users')->paginate(6);
+        $users = User::paginate(6);
+
 
         $permohonan = DB::table('permohonan')
         ->where('status','Proses')
@@ -153,7 +154,6 @@ class AdminController extends Controller
          return redirect('/admin/permohonan')->with('status2', "Dia sudah absen,Permohonan berhasil Di konfirmasi");
      }else{
         $q = DB::table('absensi')->insert([
-            'nama' => $nama['nama'],
             'id_pegawai' => $absensi1,
             'tanggal_absen' => $nama['tanggal'],
             'keterangan' => $nama['keterangan']
@@ -177,9 +177,14 @@ public function batal($id)
 
 public function home()
 {
+    $users = DB::table('users')
+    ->get();
+
     $absensi = DB::table('absensi')
+    ->join('users', 'absensi.id_pegawai', '=', 'users.id')
     ->orderBy('tanggal_absen','desc')
     ->paginate(6);
+
 
         // mengirim data absensi ke view index
     return view('admin.home',['absensi' => $absensi]);
@@ -189,10 +194,11 @@ public function home()
 public function hapus($name)
 {
     // menghapus data pegawai berdasarkan id yang dipilih
-    DB::table('users')->where('name',$name)->delete();
+    $user = User::where('name',$name);
+    $user->delete();
 
     // alihkan halaman ke halaman pegawai
-    return redirect('/admin');
+    return redirect('/admin/users');
 }
 
 public function hapus_p($id)
