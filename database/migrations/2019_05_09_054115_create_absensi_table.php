@@ -21,6 +21,7 @@ class CreateAbsensiTable extends Migration
             $table->time('jam_masuk')->nullable();
             $table->string('keterangan',15);
             $table->time('jam_keluar')->nullable();
+            $table->timestamp('update_at')->nullable();
 
             
         });

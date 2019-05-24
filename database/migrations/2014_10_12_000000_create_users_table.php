@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->boolean('admin')->default('0');
             $table->rememberToken();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
+
         });
     }
 
