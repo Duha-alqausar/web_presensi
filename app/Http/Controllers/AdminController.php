@@ -135,24 +135,43 @@ class AdminController extends Controller
 
     public function konfirmasi($id)
     {
-     DB::table('permohonan')->where('id',$id)->update([
+
+
+       $absensi = DB::table('absensi')
+       ->join('users', 'absensi.id_pegawai', '=', 'users.id')
+       ->orderBy('tanggal_absen','desc')->orderBy('update_at','desc')
+       ->paginate(6);
+
+
+       DB::table('permohonan')->where('id',$id)->update([
         'status' => "Confirm"]);
-     $nama1 = DB::table('permohonan')->where('id',$id)->get();
-     $nama = json_decode(json_encode($nama1) , true)[0];
+       $nama1 = DB::table('permohonan')->where('id',$id)->get();
+       $nama = json_decode(json_encode($nama1) , true)[0];
+       $absensi = DB::table('users')
+       ->where('name',$nama['nama'])
+       ->get();
+       $absensi1= json_decode(json_encode($absensi) , true)[0]['id'];
+       $date = date ('Y-m-d');
+       $q = DB::table('absensi')->where('id_pegawai', $absensi1)
+       ->Where('tanggal_absen', $date)->count();
 
-     $absensi = DB::table('users')
-     ->where('name',$nama['nama'])
-     ->get();
-     $absensi1= json_decode(json_encode($absensi) , true)[0]['id'];
 
+       if ($q > 0) {
+        date_default_timezone_set("Asia/Jakarta");
+        $jam = date('H:i:s');
+        $nama3 = json_decode(json_encode($nama1) , true)[0]['nama'];
+        $absensi = DB::table('absensi')
+        ->join('users', 'absensi.id_pegawai', '=', 'users.id')
+        ->where('tanggal_absen',$date)
+        ->where('name',$nama3)
+        ->update([
+            'keterangan' => $nama['keterangan'],
+            'jam_keluar' => $jam
+        ]);
+        return redirect('/admin/permohonan')->with('status1', "Permohonan berhasil Di konfirmasi");
 
-     $date = date ('Y-m-d');
-     $q = DB::table('absensi')->where('id_pegawai', $absensi1)
-     ->Where('tanggal_absen', $date)->count();
+    }else{
 
-     if ($q > 0) {
-         return redirect('/admin/permohonan')->with('status2', "Dia sudah absen,Permohonan berhasil Di konfirmasi");
-     }else{
         $q = DB::table('absensi')->insert([
             'id_pegawai' => $absensi1,
             'tanggal_absen' => $nama['tanggal'],
@@ -182,7 +201,7 @@ public function home()
 
     $absensi = DB::table('absensi')
     ->join('users', 'absensi.id_pegawai', '=', 'users.id')
-    ->orderBy('tanggal_absen','desc')
+    ->orderBy('tanggal_absen','desc')->orderBy('update_at','desc')
     ->paginate(6);
 
 
@@ -296,7 +315,7 @@ public function hapus_p($id)
     public function proses(Request $request)
     {
         DB::table('users')->insert([
-            'nip' => $request['nip'],
+            'nip' => rand(),
             'name' => $request['name'],
             'email' => $request['email'],
             'admin' => $request['level'],
