@@ -87,7 +87,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 responsive">
                   <div class="card ">
                     <div class="card-header ">
                       <h5 class="card-title">User Attendance</h5>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="card-body ">
                       <div style="width: 800px;margin: 0px auto;">
-                        <canvas id="myChart"></canvas>
+                        <canvas id="myChart" class="responsive"></canvas>
                       </div>
 
 
