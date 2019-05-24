@@ -87,7 +87,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12 responsive">
+                <div class="col-md-12">
                   <div class="card ">
                     <div class="card-header ">
                       <h5 class="card-title">User Attendance</h5>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="card-body ">
                       <div style="width: 800px;margin: 0px auto;">
-                        <canvas id="myChart" class="responsive"></canvas>
+                        <canvas id="myChart"></canvas>
                       </div>
 
 
@@ -121,7 +121,8 @@
                       data: [
                       <?php 
                       $hadir = DB::table('absensi')
-                      ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('tanggal_absen',date('Y-m-d'))->count();
+                      ->join('users', 'absensi.id_pegawai', '=', 'users.id')->where('keterangan','Hadir')
+                      ->where('tanggal_absen',date('Y-m-d'))->count();
                       echo $hadir;
                       ?>, 
                       <?php 
